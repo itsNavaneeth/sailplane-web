@@ -1,5 +1,5 @@
 import Ipfs from 'ipfs';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 let ipfs = null;
 
@@ -13,7 +13,7 @@ export default function useIpfsFactory(onError) {
         console.log('IPFS already started');
       } else if (window.ipfs && window.ipfs.enable) {
         console.log('Found window.ipfs');
-        ipfs = await window.ipfs.enable({commands: ['id']});
+        ipfs = await window.ipfs.enable({ commands: ['id'] });
       } else {
         try {
           console.time('IPFS Started');
@@ -58,5 +58,5 @@ export default function useIpfsFactory(onError) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {ipfs, isIpfsReady, ipfsInitError};
+  return { ipfs, isIpfsReady, ipfsInitError };
 }

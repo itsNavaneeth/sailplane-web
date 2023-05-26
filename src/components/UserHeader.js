@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   cleanBorder,
   primary15,
@@ -7,9 +7,9 @@ import {
   primary4,
   primary45,
 } from '../utils/colors';
-import {compressKey} from '../utils/Utils';
-import QRDisplayDialog from './QRDisplayDialog';
-import {Jdenticon} from './Jdenticon';
+import { compressKey } from '../utils/Utils';
+// import QRDisplayDialog from './QRDisplayDialog';
+import { Jdenticon } from './Jdenticon';
 
 const styles = {
   container: {
@@ -69,7 +69,7 @@ const styles = {
   },
 };
 
-export function UserHeader({sailplane, title, iconComponent, leftSide}) {
+export function UserHeader({ sailplane, title, iconComponent, leftSide }) {
   const [myID, setMyID] = useState(null);
   const [isQRCodeVisible, setIsQRCodeVisible] = useState(false);
 
@@ -120,12 +120,12 @@ export function UserHeader({sailplane, title, iconComponent, leftSide}) {
             </div>
           </div>
         ) : null}
-        <QRDisplayDialog
+        {/* <QRDisplayDialog
           value={myID}
           title={'My User ID'}
           isVisible={isQRCodeVisible}
           onClose={() => setIsQRCodeVisible(false)}
-        />
+        /> */}
       </div>
     </div>
   );

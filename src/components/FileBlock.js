@@ -1,12 +1,12 @@
-import {DropZone} from './DropZone';
-import React, {useEffect, useRef, useState} from 'react';
-import {primary2, primary35} from '../utils/colors';
-import {FolderTools} from './FolderTools';
-import {DragDropContext, Droppable} from 'react-beautiful-dnd';
-import {StatusBar} from './StatusBar';
-import {ShareDialog} from './ShareDialog';
-import {useIsSmallScreen} from '../hooks/useIsSmallScreen';
-import {DraggableFileItem} from './DraggableFileItem';
+// import {DropZone} from './DropZone';
+import React, { useEffect, useRef, useState } from 'react';
+import { primary2, primary35 } from '../utils/colors';
+import { FolderTools } from './FolderTools';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { StatusBar } from './StatusBar';
+import { ShareDialog } from './ShareDialog';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+import { DraggableFileItem } from './DraggableFileItem';
 import {
   filterImageFiles,
   filenameExt,
@@ -16,10 +16,10 @@ import {
   delay,
   alphabetical,
 } from '../utils/Utils';
-import {FileDragBlock} from './FileDragBlock';
-import Lightbox from 'react-image-lightbox';
-import {setStatus} from '../actions/tempData';
-import {useDispatch} from 'react-redux';
+import { FileDragBlock } from './FileDragBlock';
+// import Lightbox from 'react-image-lightbox';
+import { setStatus } from '../actions/tempData';
+import { useDispatch } from 'react-redux';
 
 const emptyImageURL = './empty.png';
 
@@ -68,14 +68,14 @@ const styles = {
 
 export function FileBlock({
   sharedFs,
-  ipfs,
+  // ipfs,
   directoryContents,
   setCurrentDirectory,
   currentDirectory,
   isEncrypted,
 }) {
   const isSmallScreen = useIsSmallScreen();
-  const dropzoneRef = useRef(null);
+  // const dropzoneRef = useRef(null);
   const fullFileList = sortDirectoryContents(directoryContents);
   const pathSplit = currentDirectory.split('/');
   const parentSplit = pathSplit.slice(0, pathSplit.length - 1);
@@ -130,15 +130,24 @@ export function FileBlock({
   return (
     <div style={styles.container}>
       {isImageOpen && (
-        <Lightbox
-          prevSrc={emptyImageURL}
-          nextSrc={emptyImageURL}
-          mainSrc={mainSrcURL}
-          onMovePrevRequest={() => loadImagePath(neighborImagePaths(imagePath.current)['prev'])}
-          onMoveNextRequest={() => loadImagePath(neighborImagePaths(imagePath.current)['next'])}
-          onCloseRequest={() => setImageOpen(false)}
-          imageTitle={imageTitle}
-          imageCaption={imageCaption}
+        // <Lightbox
+        //   prevSrc={emptyImageURL}
+        //   nextSrc={emptyImageURL}
+        //   mainSrc={mainSrcURL}
+        //   onMovePrevRequest={() => loadImagePath(neighborImagePaths(imagePath.current)['prev'])}
+        //   onMoveNextRequest={() => loadImagePath(neighborImagePaths(imagePath.current)['next'])}
+        //   onCloseRequest={() => setImageOpen(false)}
+        //   imageTitle={imageTitle}
+        //   imageCaption={imageCaption}
+        // />
+        <FolderTools
+          currentDirectory={currentDirectory}
+          sharedFs={sharedFs}
+          setCurrentDirectory={setCurrentDirectory}
+          isEncrypted={isEncrypted}
+        // handleOpenUpload={() => {
+        //   // dropzoneRef.current.openUpload();
+        // }}
         />
       )}
       <FolderTools
@@ -146,18 +155,18 @@ export function FileBlock({
         sharedFs={sharedFs}
         setCurrentDirectory={setCurrentDirectory}
         isEncrypted={isEncrypted}
-        handleOpenUpload={() => {
-          dropzoneRef.current.openUpload();
-        }}
+      // handleOpenUpload={() => {
+      //   // dropzoneRef.current.openUpload();
+      // }}
       />
       <div style={styles.fileHeader}>
-        <div style={{...styles.fileHeaderItem, paddingLeft: 12}}>Name</div>
+        <div style={{ ...styles.fileHeaderItem, paddingLeft: 12 }}>Name</div>
         {!isSmallScreen ? (
           <>
-            <div style={{...styles.fileHeaderItem, textAlign: 'right'}}>
+            <div style={{ ...styles.fileHeaderItem, textAlign: 'right' }}>
               Size
             </div>
-            <div style={{...styles.fileHeaderItem, textAlign: 'right'}}>
+            <div style={{ ...styles.fileHeaderItem, textAlign: 'right' }}>
               Modified
             </div>
           </>
@@ -166,13 +175,13 @@ export function FileBlock({
         <div style={styles.fileHeaderItem} />
       </div>
       <div style={styles.dropContainer}>
-        <DropZone
+        {/* <DropZone
           sharedFs={sharedFs}
           currentDirectory={currentDirectory}
           ref={dropzoneRef}>
           <DragDropContext
             onDragEnd={async (draggable) => {
-              const {combine, draggableId} = draggable;
+              const { combine, draggableId } = draggable;
               if (combine) {
                 const fileName = sharedFs.current.fs.pathName(draggableId);
                 if (
@@ -209,7 +218,7 @@ export function FileBlock({
                       fileIndex={0}
                       isParent={true}
                       key={parentPath}
-                      data={{path: parentPath, type: 'dir'}}
+                      data={{ path: parentPath, type: 'dir' }}
                       sharedFs={sharedFs}
                       ipfs={ipfs}
                       setCurrentDirectory={setCurrentDirectory}
@@ -257,7 +266,7 @@ export function FileBlock({
               )}
             </Droppable>
           </DragDropContext>
-        </DropZone>
+        </DropZone> */}
       </div>
       <StatusBar />
       <ShareDialog sharedFs={sharedFs} />

@@ -1,6 +1,6 @@
 
-import {randomBytes} from 'libp2p-crypto';
-import Crypter from '@tabcat/aes-gcm-crypter';
+import { randomBytes } from 'libp2p-crypto';
+import Cryptr from 'cryptr';
 import OrbitDBAddress from 'orbit-db/src/orbit-db-address';
 const { parse } = OrbitDBAddress;
 const bip39 = require('bip39');
@@ -35,13 +35,13 @@ export async function determineAddress(sailplane, options = {}) {
   const identity = options.identity || sailplane._orbitdb.identity
   const address = await sailplane.determineAddress(
     options.name || `sailplane/drives/${iv.toString('hex')}`,
-    {...defaultAddressOptions({ iv, enc: options.enc, identity }), ...options},
+    { ...defaultAddressOptions({ iv, enc: options.enc, identity }), ...options },
   );
   if (options.enc) {
     // initializing encryption key and persisting it to the store
-    const cryptoKey = options.cryptoKey || await Crypter.generateKey()
-    const crypter = await Crypter.create(cryptoKey)
-    const drive = await sailplane.mount(address, { crypter, Crypter })
+    const cryptoKey = options.cryptoKey || await Cryptr.generateKey()
+    const cryptr = await Cryptr.create(cryptoKey)
+    const drive = await sailplane.mount(address, { cryptr, Cryptr })
     await drive.stop()
   }
   return address;
@@ -76,7 +76,7 @@ export function mount(sailplane, address, sfsQueue = {}, options = {}) {
   address = address.toString()
   return sailplane.mounted[address] || sfsQueue[address] ||
     (() => sfsQueue[address] = sailplane
-      .mount(address, {...defaultSfsOptions, ...options})
+      .mount(address, { ...defaultSfsOptions, ...options })
       .finally(() => delete sfsQueue[address])
     )();
 };

@@ -1,7 +1,7 @@
 import React from 'react';
-import {primary4} from '../utils/colors';
-import {isWebRTCSupported} from '../utils/Utils';
-import {FiLoader} from 'react-icons/fi';
+import { primary4 } from '../utils/colors';
+import { isWebRTCSupported } from '../utils/Utils';
+import { FiLoader } from 'react-icons/fi';
 
 const styles = {
   container: {
@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-export function LoadingRightBlock({ipfsError, message, loading}) {
+export function LoadingRightBlock({ ipfsError, message, loading }) {
   if (!message) {
     message = 'Loading...';
   }
@@ -37,12 +37,12 @@ export function LoadingRightBlock({ipfsError, message, loading}) {
   );
 
   const networkFail = <>
-    Sailplane failed to start network. Try refreshing. <br/>
+    Sailplane failed to start network. Try refreshing. <br />
     If the problem persists you can try <a target="blank" href="https://intercom.help/scoutpad/en/articles/3478364-how-to-clear-local-storage-of-web-browser">clearing browser cache</a>.
   </>
 
   const failMessage = isWebRTCSupported()
-    ?  networkFail
+    ? networkFail
     : 'This browser does not support WebRTC, iOS users please try Safari.'
 
   return (

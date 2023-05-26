@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import 'react-image-lightbox/style.css';
+import React, { useEffect, useState } from 'react';
+// import 'react-image-lightbox/style.css';
 import {
   fileToBlob,
   filenameExt,
@@ -7,17 +7,17 @@ import {
   isFileExtensionAudio,
   sortDirectoryContents,
 } from '../utils/Utils';
-import {NowPlaying} from './NowPlaying';
-import {FileItem} from './FileItem';
-import {primary2, primary35} from '../utils/colors';
-import {useIsSmallScreen} from '../hooks/useIsSmallScreen';
+import { NowPlaying } from './NowPlaying';
+import { FileItem } from './FileItem';
+import { primary2, primary35 } from '../utils/colors';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
 import usePrevious from '../hooks/usePrevious';
 import produce from 'immer';
-import {useDispatch} from 'react-redux';
-import {setStatus} from '../actions/tempData';
-import {FiPauseCircle, FiPlayCircle} from 'react-icons/fi';
+import { useDispatch } from 'react-redux';
+import { setStatus } from '../actions/tempData';
+import { FiPauseCircle, FiPlayCircle } from 'react-icons/fi';
 
-export default function AudioPlaylist({files, ipfs}) {
+export default function AudioPlaylist({ files, ipfs }) {
   const styles = {
     container: {
       display: 'flex',
@@ -54,9 +54,9 @@ export default function AudioPlaylist({files, ipfs}) {
 
   const filteredFiles = files
     ? files.filter((file) => {
-        const ext = filenameExt(file.name);
-        return isFileExtensionAudio(ext);
-      })
+      const ext = filenameExt(file.name);
+      return isFileExtensionAudio(ext);
+    })
     : null;
   const isSmallScreen = useIsSmallScreen();
   const sortedFiles = sortDirectoryContents(filteredFiles);
@@ -116,13 +116,13 @@ export default function AudioPlaylist({files, ipfs}) {
       {sortedFiles ? (
         <div style={styles.fileContainer}>
           <div style={styles.fileHeader}>
-            <div style={{...styles.fileHeaderItem, paddingLeft: 12}}>Name</div>
+            <div style={{ ...styles.fileHeaderItem, paddingLeft: 12 }}>Name</div>
             {!isSmallScreen ? (
               <>
-                <div style={{...styles.fileHeaderItem, textAlign: 'right'}}>
+                <div style={{ ...styles.fileHeaderItem, textAlign: 'right' }}>
                   Size
                 </div>
-                <div style={{...styles.fileHeaderItem, textAlign: 'right'}}>
+                <div style={{ ...styles.fileHeaderItem, textAlign: 'right' }}>
                   Modified
                 </div>
               </>
@@ -138,7 +138,7 @@ export default function AudioPlaylist({files, ipfs}) {
                   : FiPlayCircle
               }
               data={file}
-              setCurrentDirectory={() => {}}
+              setCurrentDirectory={() => { }}
               readOnly={true}
               ipfs={ipfs}
               onIconClicked={() => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   lightErrorColor,
   primary,
@@ -6,11 +6,11 @@ import {
   primary45,
   primary5,
 } from '../utils/colors';
-import {FiDownload, FiEdit, FiShare2, FiTrash} from 'react-icons/fi';
-import {FaFolderOpen} from 'react-icons/fa';
+import { FiDownload, FiEdit, FiShare2, FiTrash } from 'react-icons/fi';
+import { FaFolderOpen } from 'react-icons/fa';
 import useHover from '../hooks/useHover';
-import {ToolItem} from './ToolItem';
-import {FilePreview} from './FilePreview';
+import { ToolItem } from './ToolItem';
+import { FilePreview } from './FilePreview';
 import {
   getBlobFromPath,
   filenameExt,
@@ -24,14 +24,14 @@ import {
   getEncryptionInfoFromFilename,
   doesUserHaveWriteInInstance,
 } from '../utils/Utils';
-import {saveAs} from 'file-saver';
+import { saveAs } from 'file-saver';
 import useTextInput from '../hooks/useTextInput';
-import {useDispatch} from 'react-redux';
-import {setShareData, setStatus} from '../actions/tempData';
+import { useDispatch } from 'react-redux';
+import { setShareData, setStatus } from '../actions/tempData';
 import useDoubleClick from '../hooks/useDoubleClick';
-import {useIsSmallScreen} from '../hooks/useIsSmallScreen';
-import {contextMenu} from 'react-contexify';
-import {MobileActionsDialog} from './MobileActionsDialog';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+// import {contextMenu} from 'react-contexify';
+import { MobileActionsDialog } from './MobileActionsDialog';
 
 export function FileItem({
   data,
@@ -44,7 +44,7 @@ export function FileItem({
   onIconClicked,
   readOnly,
 }) {
-  const {path, type} = data;
+  const { path, type } = data;
   const pathSplit = path.split('/');
   const name = pathSplit[pathSplit.length - 1];
   const mtime = sharedFs && sharedFs.current.fs.read(path)?.mtime;
@@ -158,7 +158,7 @@ export function FileItem({
 
   const rename = async (editNameValue) => {
     try {
-      dispatch(setStatus({message: 'Renaming file'}));
+      dispatch(setStatus({ message: 'Renaming file' }));
       await sharedFs.current.move(path, parentPath, editNameValue);
       dispatch(setStatus({}));
     } catch (e) {
@@ -170,7 +170,7 @@ export function FileItem({
     let blob;
 
     if (!fileBlob) {
-      dispatch(setStatus({message: 'Fetching download'}));
+      dispatch(setStatus({ message: 'Fetching download' }));
       const handleUpdate = (currentIndex, totalCount) => {
         dispatch(
           setStatus({
@@ -235,7 +235,7 @@ export function FileItem({
   const fetchPreview = async () => {
     // Only fetch for audio on click now
     if (!fileBlob && isFileExtensionAudio(fileExtension)) {
-      dispatch(setStatus({message: 'Fetching preview'}));
+      dispatch(setStatus({ message: 'Fetching preview' }));
       const blob = await getBlob();
       dispatch(setStatus({}));
       setFileBlob(blob);
@@ -342,7 +342,7 @@ export function FileItem({
           onClose={() => setMobileActionsVisible(false)}
           items={mobileActionItems}
         />
-        <div
+        {/* <div
           onContextMenu={(event) => {
             event.preventDefault();
 
@@ -439,7 +439,7 @@ export function FileItem({
               <FilePreview blob={fileBlob} filename={name} />
             </div>
           ) : null}
-        </div>
+        </div> */}
       </div>
     );
   };

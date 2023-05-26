@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {Dialog} from './Dialog';
-import {primary15} from '../utils/colors';
-import QrReader from 'react-qr-reader';
+import React, { useState } from 'react';
+import { Dialog } from './Dialog';
+import { primary15 } from '../utils/colors';
+// import QrReader from 'react-qr-reader';
 import Well from './Well';
-import {publicKeyValid} from '../utils/Utils';
+import { publicKeyValid } from '../utils/Utils';
 
-export default function QRScanDialog({isVisible, onClose, onScan}) {
+export default function QRScanDialog({ isVisible, onClose, onScan }) {
   const styles = {
     container: {
       display: 'flex',
@@ -29,17 +29,22 @@ export default function QRScanDialog({isVisible, onClose, onScan}) {
       body={
         <div style={styles.container}>
           {!error ? (
-            <QrReader
-              showViewFinder={false}
-              delay={300}
-              onError={(err) => setError(err)}
-              onScan={(data) => {
-                if (publicKeyValid(data)) {
-                  onScan(data);
-                }
-              }}
-              style={{width: '100%', maxWidth: 400, alignSelf: 'center'}}
-            />
+            // <QrReader
+            //   showViewFinder={false}
+            //   delay={300}
+            //   onError={(err) => setError(err)}
+            //   onScan={(data) => {
+            //     if (publicKeyValid(data)) {
+            //       onScan(data);
+            //     }
+            //   }}
+            //   style={{width: '100%', maxWidth: 400, alignSelf: 'center'}}
+            // />
+            <div>
+              <Well isError={true}>
+                This browser does not support camera access.
+              </Well>
+            </div>
           ) : (
             <div>
               <Well isError={true}>

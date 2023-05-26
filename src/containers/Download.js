@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
-import {LeftPanel} from './LeftPanel';
-import {useIsSmallScreen} from '../hooks/useIsSmallScreen';
-import useIPFS from '../hooks/useIPFS';
-import {LoadingRightBlock} from '../components/LoadingRightBlock';
-import {hot} from 'react-hot-loader';
-import {useDispatch} from 'react-redux';
-import {setStatus} from '../actions/tempData';
+import { LeftPanel } from './LeftPanel';
+import { useIsSmallScreen } from '../hooks/useIsSmallScreen';
+// import useIPFS from '../hooks/useIPFS';
+import { LoadingRightBlock } from '../components/LoadingRightBlock';
+import { hot } from 'react-hot-loader';
+import { useDispatch } from 'react-redux';
+import { setStatus } from '../actions/tempData';
 import {
   getBlobFromPathCID,
   filenameExt,
@@ -15,20 +15,20 @@ import {
   isFileExtensionSupported,
   getPercent,
 } from '../utils/Utils';
-import {saveAs} from 'file-saver';
-import {DownloadPanel} from './DownloadPanel';
-import {cleanBorder} from '../utils/colors';
-import {useWindowSize} from '../hooks/useWindowSize';
-import {catCid} from '@cypsela/sailplane-node/src/util';
-import Crypter from '@tabcat/aes-gcm-crypter';
+import { saveAs } from 'file-saver';
+import { DownloadPanel } from './DownloadPanel';
+import { cleanBorder } from '../utils/colors';
+import { useWindowSize } from '../hooks/useWindowSize';
+import { catCid } from '@cypsela/sailplane-node/src/util';
+// import Crypter from '@tabcat/aes-gcm-crypter';
 
-function Download({match}) {
-  const {cid, path, displayType, iv, key} = match.params;
+function Download({ match }) {
+  const { cid, path, displayType, iv, key } = match.params;
   const isSmallScreen = useIsSmallScreen();
   const windowSize = useWindowSize();
-  const ipfsObj = useIPFS((error) => {
-    console.error(error);
-  });
+  // const ipfsObj = useIPFS((error) => {
+  //   console.error(error);
+  // });
   const [ready, setReady] = useState(false);
   const [files, setFiles] = useState(null);
   const [fileInfo, setFileInfo] = useState(null);
@@ -70,31 +70,31 @@ function Download({match}) {
     },
   };
 
-  const getFileList = async () => {
-    const tmpFiles = await getFilesFromFolderCID(
-      ipfsObj.ipfs,
-      cleanCID,
-      () => {},
-    );
+  // const getFileList = async () => {
+  //   const tmpFiles = await getFilesFromFolderCID(
+  //     ipfsObj.ipfs,
+  //     cleanCID,
+  //     () => { },
+  //   );
 
-    setFiles(tmpFiles.slice(1));
-  };
+  //   setFiles(tmpFiles.slice(1));
+  // };
 
-  const getFileInfo = async () => {
-    const fileInfo = await getFileInfoFromCID(cleanCID, ipfsObj.ipfs);
+  // const getFileInfo = async () => {
+  //   const fileInfo = await getFileInfoFromCID(cleanCID, ipfsObj.ipfs);
 
-    setFileInfo(fileInfo);
-  };
+  //   setFileInfo(fileInfo);
+  // };
 
-  useEffect(() => {
-    if (ipfsObj.isIpfsReady && !ready) {
-      setReady(true);
+  // useEffect(() => {
+  //   if (ipfsObj.isIpfsReady && !ready) {
+  //     setReady(true);
 
-      getFileList();
-      getFileInfo();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ipfsObj.ipfs, ipfsObj.isIpfsReady, ready, displayType, cleanCID]);
+  //     getFileList();
+  //     getFileInfo();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [ipfsObj.ipfs, ipfsObj.isIpfsReady, ready, displayType, cleanCID]);
 
   async function getBlob() {
     let blob;
@@ -113,22 +113,22 @@ function Download({match}) {
     if (fileBlob) {
       blob = fileBlob;
     } else if (key) {
-      const tmpBlob = await catCid(ipfsObj.ipfs, cleanCID, {
-        Crypter,
-        key: cleanKey,
-        iv: cleanIV,
-        handleUpdate,
-      });
-      blob = new Blob(Array.from([tmpBlob.buffer]));
+      // const tmpBlob = await catCid(ipfsObj.ipfs, cleanCID, {
+      //   // Crypter,
+      //   key: cleanKey,
+      //   iv: cleanIV,
+      //   handleUpdate,
+      // });
+      // blob = new Blob(Array.from([tmpBlob.buffer]));
 
-      setFileBlob(blob);
+      // setFileBlob(blob);
     } else {
-      blob = await getBlobFromPathCID(
-        cleanCID,
-        cleanPath,
-        ipfsObj.ipfs,
-        handleUpdate
-      );
+      // blob = await getBlobFromPathCID(
+      //   cleanCID,
+      //   cleanPath,
+      //   ipfsObj.ipfs,
+      //   handleUpdate
+      // );
 
       setFileBlob(blob);
     }
@@ -139,7 +139,7 @@ function Download({match}) {
   }
 
   const getDownload = async (password) => {
-    dispatch(setStatus({message: 'Fetching file'}));
+    dispatch(setStatus({ message: 'Fetching file' }));
     let blob = await getBlob();
 
     saveAs(blob, name);
@@ -165,7 +165,7 @@ function Download({match}) {
           downloadComplete={downloadComplete}
           fileInfo={fileInfo}
           fileBlob={fileBlob}
-          ipfs={ipfsObj.ipfs}
+        // ipfs={ipfsObj.ipfs}
         />
       ) : (
         <LoadingRightBlock />
